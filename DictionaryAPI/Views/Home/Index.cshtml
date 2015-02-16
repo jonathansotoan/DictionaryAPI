@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>The fanciest dictionary!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @Styles.Render(
+            "~/bundles/bootstrap/css",
+            "~/bundles/listingWords"
+        )
+    </head>
+    <body ng-app="fanciestDictionary">
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#project-name">Fanciest Dictionary</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#search">Search word</a></li>
+                        <li><a href="#add-word">Add word</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        <div ng-controller="ListingWordsController as listingWordsCtrl">
+            <div ng-repeat="word in listingWordsCtrl.words">
+                <dct-word></dct-word>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        @Scripts.Render(
+            "~/bundles/jquery",
+            "~/bundles/bootstrap",
+            "~/bundles/angular",
+            "~/bundles/app"
+        )
+        <!--[if lt IE 9]>
+    @Scripts.Render("~/bundles/ie-compatibility-helpers")
+<![endif]-->
+</body>
+</html>
