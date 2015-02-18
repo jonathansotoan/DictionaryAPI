@@ -8,6 +8,7 @@
 *.so
 */bin
 */obj
+*/App_Data
 
 # Build tools #
 ###########
