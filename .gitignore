@@ -6,8 +6,8 @@
 *.exe
 *.o
 *.so
-/bin
-/obj
+*/bin
+*/obj
 
 # Build tools #
 ###########

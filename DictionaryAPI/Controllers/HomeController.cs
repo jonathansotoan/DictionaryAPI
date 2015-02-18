@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace DictionaryAPI.Controllers
+namespace DictionaryApi.UI.Controllers
 {
     public class HomeController : Controller
     {
