@@ -1,19 +1,23 @@
 ﻿controllers.controller('WordsController', ['getWords', 'deleteWord', function (getWords, deleteWord) {
-    this.words = getWords();
+    var _self = this;
 
-    this.addWord = function () {
-        this.words[this.words.length] = {
+    getWords(function (returnedWords) {
+        _self.words = returnedWords;
+    });
+
+    _self.addWord = function () {
+        _self.words[_self.words.length] = {
             name: 'WordToDefine',
             definition: 'Write your definition here'
         };
     };
 
-    this.deleteWord = function (id) {
+    _self.deleteWord = function (id) {
         deleteWord(id, function () {
-            var wordToDelete = this.words.filter(function (wordItem) {
+            var wordToDelete = _self.words.filter(function (wordItem) {
                 return wordItem.id == id;
             })[0];
-            this.words.splice(this.words.indexOf(wordToDelete), 1);
+            _self.words.splice(_self.words.indexOf(wordToDelete), 1);
         });
     };
 }]);
