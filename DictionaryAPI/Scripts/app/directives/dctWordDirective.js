@@ -3,8 +3,9 @@
         restrict: 'E',
         templateUrl: '/Scripts/app/templates/dctWordTemplate.html',
         scope: {
-            word: '=word',
-            deleteWord: '&'
+            word: '=',
+            deleteWord: '&',
+            makeEditable: '&'
         }
     };
 });
