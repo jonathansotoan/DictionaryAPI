@@ -29,6 +29,7 @@ namespace Dictionary.UI.App_Start
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/updateWordService.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/deleteWordService.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/directives/directivesModule.js",
+                "~/Scripts" + HAND_CODED_FILES_PATH + "/directives/dctEditableWordDirective.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/directives/dctWordDirective.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/controllers/controllersModule.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/controllers/GlobalController.js",

@@ -30,10 +30,12 @@ namespace Dictionary.UI.Controllers
         }
 
         // POST api/Dictionary
-        public void Post(Word word)
+        public int Post(Word word)
         {
             dictionaryContext.Words.Add(word);
             dictionaryContext.SaveChanges();
+
+            return word.ID;
         }
 
         // PUT api/Dictionary
