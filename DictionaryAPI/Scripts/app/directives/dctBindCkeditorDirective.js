@@ -85,7 +85,8 @@
                 });
 
                 ckeditorInstance.on('blur', function () {
-                    makeUneditableAndSave(element[0].id);
+                    CKEDITOR.instances[element[0].id].destroy();
+                    //makeUneditableAndSave(element[0].id);
                 });
 
                 ngModel.$render = function (value) {

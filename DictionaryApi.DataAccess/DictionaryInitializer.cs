@@ -23,8 +23,8 @@ namespace Dictionary.DataAccess
             {
                 new Word
                 {
-                    Name="Fancy",
-                    Definition="of extra high quality or exceptional appeal"
+                    Name="Window",
+                    Definition="Building artifact used to let light pass"
                 },
                 new Word
                 {
@@ -33,13 +33,13 @@ namespace Dictionary.DataAccess
                 },
                 new Word
                 {
-                    Name="Mouse",
-                    Definition="External device for computers"
+                    Name="Fancy",
+                    Definition="of extra high quality or exceptional appeal"
                 },
                 new Word
                 {
-                    Name="Window",
-                    Definition="Building artifact used to let light pass"
+                    Name="Mouse",
+                    Definition="External device for computers"
                 }
             };
             words.ForEach(word => context.Words.Add(word));

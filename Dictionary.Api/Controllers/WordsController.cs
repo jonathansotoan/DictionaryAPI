@@ -10,7 +10,7 @@ using System.Web.Http.Cors;
 namespace Dictionary.UI.Controllers
 {
     [EnableCors(origins: "http://localhost:51994", headers: "*", methods: "*")]
-    public class DictionaryController : ApiController
+    public class WordsController : ApiController
     {
         private DictionaryContext dictionaryContext = new DictionaryContext();
 
