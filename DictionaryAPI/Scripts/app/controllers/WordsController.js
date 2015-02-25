@@ -38,10 +38,16 @@
         CKEDITOR.instances[id].destroy();
         dividedId = id.split('-');
 
-        if (dividedId[2] == '') {// if the word is new
-            saveWord({
+        if (dividedId[2] == '') {// if the word is new (it does not have an id yet)
+            var newWord = {
                 name: getTextFromId(dividedId[0] + '-name-'),
                 definition: getTextFromId(dividedId[0] + '-definition-')
+            };
+
+            saveWord(newWord, function (assignedId) {
+                _self.words.filter(function (wordItem) {
+                    return !wordItem.id;
+                })[0].id = assignedId;
             });
         } else {// if the word is not new
             updateWord({
