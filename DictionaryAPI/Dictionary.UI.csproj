@@ -154,6 +154,7 @@
     <Content Include="Scripts\app\controllers\controllersModule.js" />
     <Content Include="Scripts\app\controllers\GlobalController.js" />
     <Content Include="Scripts\app\controllers\WordsController.js" />
+    <Content Include="Scripts\app\directives\dctBindCkeditorDirective.js" />
     <Content Include="Scripts\app\directives\dctWordDirective.js" />
     <Content Include="Scripts\app\directives\directivesModule.js" />
     <Content Include="Scripts\app\services\apiUrlsService.js" />

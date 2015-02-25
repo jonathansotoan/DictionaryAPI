@@ -1,6 +1,10 @@
-﻿controllers.controller('WordsController', ['getWords', 'saveWord', 'updateWord', 'deleteWord', function (getWords, saveWord, updateWord, deleteWord) {
+﻿controllers.controller('WordsController', ['getWords', 'saveWord', 'updateWord', 'deleteWord', '$scope', function (getWords, saveWord, updateWord, deleteWord, $scope) {
     var _self = this;
     _self.isAbleToAddWord = true;
+
+    $('#navbar').on('click', function () {
+        console.log(_self.words);
+    });
 
     getWords(function (returnedWords) {
         _self.words = returnedWords;
@@ -40,24 +44,19 @@
         dividedId = id.split('-');
 
         if (dividedId[2] == '') {// if the word is new (it does not have an id yet)
-            var newWord = {
-                name: getTextFromId(dividedId[0] + '-name-'),
-                definition: getTextFromId(dividedId[0] + '-definition-')
-            };
-
+            var newWord = _self.words.filter(function (wordItem) {
+                return !wordItem.id;
+            })[0];
+            console.log(newWord);
             saveWord(newWord, function (assignedId) {
-                _self.words.filter(function (wordItem) {
-                    return !wordItem.id;
-                })[0].id = assignedId;
+                newWord.id = assignedId;
             });
 
             _self.isAbleToAddWord = true;
         } else {// if the word is not new
-            updateWord({
-                id: dividedId[2],
-                name: getTextFromId(dividedId[0] + '-name-' + dividedId[2]),
-                definition: getTextFromId(dividedId[0] + '-definition-' + dividedId[2])
-            });
+            updateWord(_self.words.filter(function (wordItem) {
+                return wordItem.id == dividedId[2];
+            })[0]);
         }
     };
 
@@ -72,6 +71,10 @@
         ckeditorInstance.on('blur', function () {
             makeUneditableAndSave(id);
         });
+
+        $('#' + id).attr('dct-bind-ckeditor', '');
+        console.log('attached to ' + id);
+        $scope.$apply();
     };
 
     _self.addWord = function () {
