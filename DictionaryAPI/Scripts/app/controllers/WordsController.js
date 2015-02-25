@@ -1,5 +1,6 @@
 ﻿controllers.controller('WordsController', ['getWords', 'saveWord', 'updateWord', 'deleteWord', function (getWords, saveWord, updateWord, deleteWord) {
     var _self = this;
+    _self.isAbleToAddWord = true;
 
     getWords(function (returnedWords) {
         _self.words = returnedWords;
@@ -49,6 +50,8 @@
                     return !wordItem.id;
                 })[0].id = assignedId;
             });
+
+            _self.isAbleToAddWord = true;
         } else {// if the word is not new
             updateWord({
                 id: dividedId[2],
@@ -72,6 +75,7 @@
     };
 
     _self.addWord = function () {
+        _self.isAbleToAddWord = false;
         _self.words[_self.words.length] = {
             name: 'WordToDefine',
             definition: 'Write your definition here'
