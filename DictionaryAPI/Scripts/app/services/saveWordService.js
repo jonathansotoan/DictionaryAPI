@@ -2,6 +2,6 @@
     return function (word) {
         $http.post(apiUrls.dictionaryFullUrl, word).success(function () {
             console.log('word {"' + word.name + '", "' + word.definition + '"} created');
-        }).error(printHttpError);
+        }).error(printHttpError('Problem while saving the word {"' + word.name + '", "' + word.definition + '"}'));
     };
 }]);

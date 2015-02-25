@@ -2,6 +2,8 @@
     return function (word) {
         $http.put(apiUrls.dictionaryFullUrl, word).success(function () {
             console.log('word {' + word.id + ', "' + word.name + '", "' + word.definition + '"} updated');
-        }).error(printHttpError);
+        }).error(
+            printHttpError('Problem while trying to update the following word {' + word.id + ', "' + word.name + '", "' + word.definition + '"}')
+        );
     };
 }]);
