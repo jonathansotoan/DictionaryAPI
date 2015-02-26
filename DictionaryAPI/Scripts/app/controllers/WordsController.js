@@ -8,7 +8,7 @@
 
     // private methods
     var getTextFromId = function (id) {
-        return $('#' + id).html().trim();
+        return $('#' + id).html().trimHtml();
     };
 
     var areEqual = function (word1, word2) {
