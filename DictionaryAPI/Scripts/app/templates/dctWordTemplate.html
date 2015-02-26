@@ -1,13 +1,21 @@
 ﻿<div class="word">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <span class="panel-title" id="panel-name-{{word.id}}" ng-model="word.name" ng-click="makeEditable({id: 'panel-name-' + word.id})">
-                {{word.name}}
+            <span
+                  id="panel-name-{{word.id}}"
+                  class="panel-title"
+                  ng-click="makeEditable({id: 'panel-name-' + word.id})"
+                  ng-bind-html="word.name">
             </span>
-            <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="deleteWord()">Delete</button>
+            <button type="button" class="btn btn-danger btn-xs pull-right" ng-click="deleteWord()">
+                Delete
+            </button>
         </div>
-        <div class="panel-body text-justify" id="panel-definition-{{word.id}}" ng-model="word.definition" ng-click="makeEditable({id: 'panel-definition-' + word.id})">
-            {{word.definition}}
+        <div
+             id="panel-definition-{{word.id}}"
+             class="panel-body text-justify"
+             ng-click="makeEditable({id: 'panel-definition-' + word.id})"
+             ng-bind-html="word.definition">
         </div>
     </div>
 </div>

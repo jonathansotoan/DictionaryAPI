@@ -13,7 +13,10 @@ namespace Dictionary.UI.App_Start
             // scripts
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts" + LIB_PATH + "/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include("~/Scripts" + LIB_PATH + "/bootstrap.js"));
-            bundles.Add(new ScriptBundle("~/bundles/angular").Include("~/Scripts" + LIB_PATH + "/angular.js"));
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                "~/Scripts" + LIB_PATH + "/angular.js",
+                "~/Scripts" + LIB_PATH + "/angular-sanitize.js"
+            ));
             bundles.Add(new ScriptBundle("~/bundles/ckeditor").Include("~/Scripts" + LIB_PATH + "/ckeditor/ckeditor.js"));
             bundles.Add(new ScriptBundle("~/bundles/ie-compatibility-helpers").Include(
                 "~/Scripts" + LIB_PATH + "/html5shiv.js",

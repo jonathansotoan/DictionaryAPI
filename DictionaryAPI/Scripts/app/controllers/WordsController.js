@@ -8,7 +8,39 @@
 
     // private methods
     var getTextFromId = function (id) {
-        return $('#' + id).text().trim();
+        return $('#' + id).html().trim();
+    };
+
+    var areEqual = function (word1, word2) {
+        var properties = new Array(0);
+
+        for (property in word1) {
+            if (property[0] !== '$') {
+                properties[properties.length] = property;
+            }
+        }
+
+        for (property in word2) {
+            if (property[0] !== '$') {
+                properties[properties.length] = property;
+            }
+        }
+
+        properties = properties.filter(function (elem, index, self) {
+            return index == self.indexOf(elem);
+        });
+
+        for (index in properties) {
+            if (word1[properties[index]] !== word2[properties[index]]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    var replaceWord = function (oldWord, newWord) {
+        _self.words[_self.words.indexOf(oldWord)] = newWord;
     };
 
     var setFocusAtTheEnd = function (editor) {
@@ -46,31 +78,44 @@
             };
 
             saveWord(newWord, function (assignedId) {
-                _self.words.filter(function (wordItem) {
+                newWord['id'] = assignedId;
+                wordWithoutId = _self.words.filter(function (wordItem) {
                     return !wordItem.id;
-                })[0].id = assignedId;
+                })[0];
+                replaceWord(wordWithoutId, newWord);
             });
 
             _self.isAbleToAddWord = true;
         } else {// if the word is not new
-            updateWord({
-                id: dividedId[2],
+            var oldWord = _self.words.filter(function (wordItem) {
+                return wordItem.id == dividedId[2];
+            })[0];
+            var updatedWord = {
+                id: parseInt(dividedId[2]),
                 name: getTextFromId(dividedId[0] + '-name-' + dividedId[2]),
                 definition: getTextFromId(dividedId[0] + '-definition-' + dividedId[2])
-            });
+            };
+
+            if (!areEqual(oldWord, updatedWord)) {
+                updateWord(updatedWord);
+                replaceWord(oldWord, updatedWord);
+            }
         }
     };
 
 
     // public methods
     _self.makeEditable = function (id) {
-        var ckeditorInstance = CKEDITOR.replace(id);
-        ckeditorInstance.on('instanceReady', function (event) {
-            setFocusAtTheEnd(event.editor);
-        });
-
-        ckeditorInstance.on('blur', function () {
-            makeUneditableAndSave(id);
+        CKEDITOR.replace(id, {
+            customConfig: '/Scripts/app/ckeditor.defaultconfig.js',
+            on: {
+                instanceReady: function (event) {
+                    setFocusAtTheEnd(event.editor);
+                },
+                blur: function () {
+                    makeUneditableAndSave(id);
+                }
+            }
         });
     };
 
