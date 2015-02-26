@@ -28,11 +28,18 @@
         </div>
     </nav>
 
-    <!-- Words -->
     <div ng-controller="WordsController as wordsCtrl">
+        <!-- Search -->
+        <div class="row">
+            <div class="form-group col-xs-offset-4 col-xs-8 col-sm-offset-6 col-sm-3 col-md-offset-6 col-md-3 col-lg-offset-6 col-lg-2">
+                <label class="sr-only" for="searchField">Type what you have to search</label>
+                <input type="text" class="form-control" id="searchField" ng-model="wordsCtrl.search" placeholder="Search here">
+            </div>
+        </div>
+        <!-- Words -->
         <div class="row">
             <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
-                <div ng-repeat="word in wordsCtrl.words">
+                <div ng-repeat="word in wordsCtrl.words | filter:wordsCtrl.search">
                     <dct-word word="word" delete-word="wordsCtrl.deleteWord(word.id)" make-editable="wordsCtrl.makeEditable(id)"></dct-word>
                 </div>
             </div>

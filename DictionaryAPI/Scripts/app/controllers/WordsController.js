@@ -1,6 +1,7 @@
 ﻿controllers.controller('WordsController', ['getWords', 'saveWord', 'updateWord', 'deleteWord', function (getWords, saveWord, updateWord, deleteWord) {
     var _self = this;
     _self.isAbleToAddWord = true;
+    _self.search;
 
     getWords(function (returnedWords) {
         _self.words = returnedWords;
@@ -43,32 +44,7 @@
         _self.words[_self.words.indexOf(oldWord)] = newWord;
     };
 
-    var setFocusAtTheEnd = function (editor) {
-        editor.focus();
-
-        var selection = editor.getSelection();
-        var selected_ranges = selection.getRanges();
-        var node = selected_ranges[0].startContainer; // selecting the starting node
-        var parents = node.getParents(true);
-
-        node = parents[parents.length - 2].getFirst();
-
-        while (true) {
-            var x = node.getNext();
-            if (x == null) {
-                break;
-            }
-            node = x;
-        }
-
-        selection.selectElement(node);
-        selected_ranges = selection.getRanges();
-        selected_ranges[0].collapse(false);  //  false collapses the range to the end of the selected node, true before the node.
-        selection.selectRanges(selected_ranges);  // putting the current selection there
-    };
-
-    var makeUneditableAndSave = function (id) {
-        CKEDITOR.instances[id].destroy();
+    var saveEditedWord = function (id) {
         dividedId = id.split('-');
 
         if (dividedId[2] == '') {// if the word is new (it does not have an id yet)
@@ -103,17 +79,18 @@
         }
     };
 
-
     // public methods
     _self.makeEditable = function (id) {
-        CKEDITOR.replace(id, {
+        if (CKEDITOR.instances[id]) {
+            CKEDITOR.instances[id].destroy(true);
+        }
+
+        CKEDITOR.disableAutoInline = true;
+        CKEDITOR.inline(id, {
             customConfig: '/Scripts/app/ckeditor.defaultconfig.js',
             on: {
-                instanceReady: function (event) {
-                    setFocusAtTheEnd(event.editor);
-                },
                 blur: function () {
-                    makeUneditableAndSave(id);
+                    saveEditedWord(id);
                 }
             }
         });
