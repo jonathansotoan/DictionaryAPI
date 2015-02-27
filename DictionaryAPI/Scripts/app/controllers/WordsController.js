@@ -44,7 +44,7 @@
     // public methods
     _self.makeEditable = function (id) {
         if (CKEDITOR.instances[id]) {
-            CKEDITOR.instances[id].destroy(true);
+            return;
         }
 
         CKEDITOR.disableAutoInline = true;
@@ -53,6 +53,7 @@
             on: {
                 blur: function (event) {
                     saveEditedWord(event.sender);
+                    event.sender.destroy(true);
                 }
             }
         });
