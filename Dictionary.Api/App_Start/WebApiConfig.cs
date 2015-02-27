@@ -19,7 +19,7 @@ namespace Dictionary.Api.App_Start
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
-                defaults: new { controller = "Dictionary", id = RouteParameter.Optional }
+                defaults: new { controller = "Words", id = RouteParameter.Optional }
             );
 
             // Error policy

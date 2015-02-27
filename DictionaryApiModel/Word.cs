@@ -1,4 +1,6 @@
-﻿namespace Dictionary.Model
+﻿using Newtonsoft.Json;
+
+namespace Dictionary.Model
 {
     public class Word
     {
@@ -7,9 +9,10 @@
         public string Name { get; set; }
         public string Definition { get; set; }
 
-        // relationships (virtual keyword allows lazy loading)
-        //public int SectionID { get; set; }
+        public int? SectionID { get; set; }
 
-        //public virtual Section Section { get; set; }
+        // navigation properties (virtual keyword allows lazy loading)
+        [JsonIgnore]
+        public virtual Section Section { get; set; }
     }
 }
