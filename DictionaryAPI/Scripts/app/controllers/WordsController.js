@@ -5,6 +5,7 @@
 
     var defaultName = 'WordToDefine';
     var defaultDefinition = 'Write your definition here';
+    var sectionColors = new Array(0);
 
     getWords(function (returnedWords) {
         _self.words = returnedWords;
@@ -41,7 +42,33 @@
         }
     };
 
+    var getRandomColor = function() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
     // public methods
+    _self.getColorForSection = function (sectionId) {
+        var existingSectionColor = sectionColors.filter(function (sectionColorItem) {
+            return sectionColorItem.sectionId == sectionId;
+        })[0];
+
+            console.log(existingSectionColor);
+        if (existingSectionColor) {
+            return existingSectionColor.color;
+        } else {
+            sectionColors[sectionColors.length] = {
+                sectionId: sectionId,
+                color: getRandomColor()
+            }
+            return sectionColors[sectionColors.length].color;
+        }
+    };
+
     _self.makeEditable = function (id) {
         if (CKEDITOR.instances[id]) {
             return;
@@ -75,4 +102,9 @@
             _self.words.splice(_self.words.indexOf(wordToDelete), 1);
         });
     };
+
+    // for debugging
+    $('#navbar').on('click', function () {
+        console.log(_self.words);
+    });
 }]);

@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
                 <div ng-repeat="word in wordsCtrl.words | filter:wordsCtrl.search">
-                    <dct-word word="word" delete-word="wordsCtrl.deleteWord(word.id)" make-editable="wordsCtrl.makeEditable(id)"></dct-word>
+                    <dct-word word="word" delete-word="wordsCtrl.deleteWord(word.id)" make-editable="wordsCtrl.makeEditable(id)" get-color="wordsCtrl.getColorForSection(word.sectionID)"></dct-word>
                 </div>
             </div>
         </div>

@@ -5,7 +5,8 @@
         scope: {
             word: '=',
             deleteWord: '&',
-            makeEditable: '&'
+            makeEditable: '&',
+            getColor: '&'
         }
     };
 });
