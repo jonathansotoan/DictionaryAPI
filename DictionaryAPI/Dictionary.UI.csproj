@@ -161,6 +161,7 @@
     <Content Include="Scripts\app\directives\directivesModule.js" />
     <Content Include="Scripts\app\services\apiUrlsService.js" />
     <Content Include="Scripts\app\services\deleteWordService.js" />
+    <Content Include="Scripts\app\services\getSectionsService.js" />
     <Content Include="Scripts\app\services\getWordsService.js" />
     <Content Include="Scripts\app\services\printHttpErrorService.js" />
     <Content Include="Scripts\app\services\saveWordService.js" />

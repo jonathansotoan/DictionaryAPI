@@ -1,9 +1,44 @@
 ﻿@editableContentBoderColor: #BC8F8F;
+@textColor: black;
+@colorForSection1: #4cff00;
+@colorForSection2: #deb93f;
+@colorForSection3: #8c3eef;
 
 .row {
     margin: 10px;
 }
 
 .editable-content {
-    border: 2px dashed @editableContentBoderColor;
+    //border: 2px dashed @editableContentBoderColor;
+}
+
+.label {
+    margin-right: 5px;
+}
+
+.section-panel-1 {
+    border-color: @colorForSection1;
+}
+.section-panel-1 > .section-panel-heading-1, .section-panel-heading-1 {
+    color: @textColor;
+    background-color: lighten(@colorForSection1, 30%);
+    border-color: @colorForSection1;
+}
+
+.section-panel-2 {
+    border-color: @colorForSection2;
+}
+.section-panel-2 > .section-panel-heading-2, .section-panel-heading-2 {
+    color: @textColor;
+    background-color: lighten(@colorForSection2, 30%);
+    border-color: @colorForSection2;
+}
+
+.section-panel-3 {
+    border-color: @colorForSection3;
+}
+.section-panel-3 > .section-panel-heading-3, .section-panel-heading-3 {
+    color: @textColor;
+    background-color: lighten(@colorForSection3, 30%);
+    border-color: @colorForSection3;
 }

@@ -1,10 +1,16 @@
-﻿controllers.controller('WordsController', ['getWords', 'saveWord', 'updateWord', 'deleteWord', function (getWords, saveWord, updateWord, deleteWord) {
+﻿controllers.controller('WordsController', ['getSections', 'getWords', 'saveWord', 'updateWord', 'deleteWord', function (getSections, getWords, saveWord, updateWord, deleteWord) {
     var _self = this;
+    _self.sections;
+    _self.words;
     _self.isAbleToAddWord = true;
     _self.search;
 
     var defaultName = 'WordToDefine';
     var defaultDefinition = 'Write your definition here';
+    
+    getSections(function(returnedSections) {
+        _self.sections = returnedSections;
+    });
 
     getWords(function (returnedWords) {
         _self.words = returnedWords;
@@ -74,5 +80,13 @@
             })[0];
             _self.words.splice(_self.words.indexOf(wordToDelete), 1);
         });
+    };
+
+    _self.getSectionById = function (id) {
+        if (_self.sections) {
+            return _self.sections.filter(function (sectionItem) {
+                return sectionItem.id == id;
+            })[0];
+        }
     };
 }]);

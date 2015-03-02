@@ -27,6 +27,7 @@ namespace Dictionary.UI.App_Start
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/servicesModule.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/printHttpErrorService.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/apiUrlsService.js",
+                "~/Scripts" + HAND_CODED_FILES_PATH + "/services/getSectionsService.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/getWordsService.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/saveWordService.js",
                 "~/Scripts" + HAND_CODED_FILES_PATH + "/services/updateWordService.js",
