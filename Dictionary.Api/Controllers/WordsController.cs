@@ -12,7 +12,12 @@ namespace Dictionary.UI.Controllers
     [EnableCors(origins: "http://localhost:51994", headers: "*", methods: "*")]
     public class WordsController : ApiController
     {
-        private DictionaryContext dictionaryContext = new DictionaryContext();
+        private IWordRepository wordRepository;
+
+        public WordsController()
+        {
+            wordRepository = new WordRepository(new DictionaryContext());
+        }
 
         // GET api/Words/
         /*[ResponseType(typeof(Word))]
@@ -20,37 +25,35 @@ namespace Dictionary.UI.Controllers
         public IEnumerable<Word> Get()
         {
             //return this.Ok(db.Words.ToList());
-            return dictionaryContext.Words.ToList();
+            return wordRepository.GetWords();
         }
 
         // GET api/Words/5
         public Word Get(int id)
         {
-            return dictionaryContext.Words.First<Word>(word => word.ID == id);
+            return wordRepository.GetWordById(id);
         }
 
         // POST api/Words
         public int Post(Word word)
         {
-            dictionaryContext.Words.Add(word);
-            dictionaryContext.SaveChanges();
-
-            return word.ID;
+            int assignedId = wordRepository.InsertWord(word);
+            wordRepository.Save();
+            return assignedId;
         }
 
         // PUT api/Words
         public void Put(Word word)
         {
-            dictionaryContext.Words.Add(word);
-            dictionaryContext.Entry(word).State = System.Data.Entity.EntityState.Modified;
-            dictionaryContext.SaveChanges();
+            wordRepository.UpdateWord(word);
+            wordRepository.Save();
         }
 
         // DELETE api/Words/5
         public void Delete(int id)
         {
-            dictionaryContext.Words.Remove(dictionaryContext.Words.Find(id));
-            dictionaryContext.SaveChanges();
+            wordRepository.DeleteWord(id);
+            wordRepository.Save();
         }
     }
 }

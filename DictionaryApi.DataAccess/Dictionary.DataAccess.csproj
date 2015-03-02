@@ -7,7 +7,7 @@
     <ProjectGuid>{9C7DF591-E121-4904-A1DA-7D8C4D77F6A0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DictionaryApi.DataAccess</RootNamespace>
+    <RootNamespace>Dictionary.DataAccess</RootNamespace>
     <AssemblyName>DictionaryApi.DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -53,7 +53,9 @@
   <ItemGroup>
     <Compile Include="DictionaryContext.cs" />
     <Compile Include="DictionaryInitializer.cs" />
+    <Compile Include="IWordRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WordRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
