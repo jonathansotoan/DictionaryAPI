@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Dictionary.Tests.Api.Mock
 {
-    class MockUnitOfWork : UnitOfWork<DictionaryContext>
+    public class MockUnitOfWork : UnitOfWork<DictionaryContext>
     {
         public override IRepository<TEntity> GetRepository<TEntity>()
         {

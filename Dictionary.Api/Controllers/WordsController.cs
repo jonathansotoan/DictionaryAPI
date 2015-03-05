@@ -1,10 +1,7 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Description;
+﻿using System.Web.Http;
 using Dictionary.Model;
 using Dictionary.DataAccess;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http.Cors;
 
 namespace Dictionary.UI.Controllers
