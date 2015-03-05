@@ -2,11 +2,9 @@
 
 namespace Dictionary.Model
 {
-    public class Word
+    public class Word : BasicEntity
     {
         // properties
-        public int ID { get; set; }
-        public string Name { get; set; }
         public string Definition { get; set; }
 
         public int? SectionID { get; set; }

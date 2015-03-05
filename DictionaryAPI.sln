@@ -15,6 +15,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Api", "Dictionary.Api\Dictionary.Api.csproj", "{1D8D06EF-D8E3-410E-8184-44B5DA53F770}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Tests", "Dictionary.Tests\Dictionary.Tests.csproj", "{9EE4F007-01BE-4F10-B87B-D38C384CE999}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E9E99E63-610D-4F31-91FF-CD6CD1CFAB7F} = {E9E99E63-610D-4F31-91FF-CD6CD1CFAB7F}
+		{9C7DF591-E121-4904-A1DA-7D8C4D77F6A0} = {9C7DF591-E121-4904-A1DA-7D8C4D77F6A0}
+		{1D8D06EF-D8E3-410E-8184-44B5DA53F770} = {1D8D06EF-D8E3-410E-8184-44B5DA53F770}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

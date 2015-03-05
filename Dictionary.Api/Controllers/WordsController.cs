@@ -12,11 +12,16 @@ namespace Dictionary.UI.Controllers
     [EnableCors(origins: "http://localhost:51994", headers: "*", methods: "*")]
     public class WordsController : ApiController
     {
-        private IWordRepository wordRepository;
+        private UnitOfWork<DictionaryContext> unitOfWork;
 
         public WordsController()
         {
-            wordRepository = new WordRepository(new DictionaryContext());
+            this.unitOfWork = new UnitOfWork<DictionaryContext>();
+        }
+
+        public WordsController(UnitOfWork<DictionaryContext> uow)
+        {
+            this.unitOfWork = uow;
         }
 
         // GET api/Words/
@@ -25,35 +30,41 @@ namespace Dictionary.UI.Controllers
         public IEnumerable<Word> Get()
         {
             //return this.Ok(db.Words.ToList());
-            return wordRepository.GetWords();
+            return unitOfWork.GetRepository<Word>().Get();
         }
 
         // GET api/Words/5
         public Word Get(int id)
         {
-            return wordRepository.GetWordById(id);
+            return unitOfWork.GetRepository<Word>().GetById(id);
         }
 
         // POST api/Words
         public int Post(Word word)
         {
-            int assignedId = wordRepository.InsertWord(word);
-            wordRepository.Save();
+            int assignedId = unitOfWork.GetRepository<Word>().Insert(word).ID;
+            unitOfWork.Save();
             return assignedId;
         }
 
         // PUT api/Words
         public void Put(Word word)
         {
-            wordRepository.UpdateWord(word);
-            wordRepository.Save();
+            unitOfWork.GetRepository<Word>().Update(word);
+            unitOfWork.Save();
         }
 
         // DELETE api/Words/5
         public void Delete(int id)
         {
-            wordRepository.DeleteWord(id);
-            wordRepository.Save();
+            unitOfWork.GetRepository<Word>().Delete(id);
+            unitOfWork.Save();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

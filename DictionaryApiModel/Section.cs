@@ -3,13 +3,9 @@ using System.Collections.Generic;
 
 namespace Dictionary.Model
 {
-    public class Section
+    public class Section : BasicEntity
     {
-        // properties
-        public int ID { get; set; }
-        public string Name { get; set; }
-
-        // navigation properties
+        // navigation property
         public virtual ICollection<Word> Words {get; set; }
     }
 }
