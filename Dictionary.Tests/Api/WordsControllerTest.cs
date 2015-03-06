@@ -4,8 +4,6 @@ using Dictionary.DataAccess;
 using Dictionary.Tests.Api.Mock;
 using Dictionary.Model;
 using System.Linq;
-using System;
-using System.Collections.Generic;
 
 namespace Dictionary.Tests.Api
 {
@@ -22,7 +20,6 @@ namespace Dictionary.Tests.Api
             wordsController = new WordsController(unitOfWork);
 
             unitOfWork.SetRepositoryData<Word>(DefaultObjects.Words);
-            unitOfWork.SetRepositoryData<Section>(DefaultObjects.Sections);
         }
 
         [TestMethod]

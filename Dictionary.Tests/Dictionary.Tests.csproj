@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Api\Mock\MockRepository.cs" />
     <Compile Include="Api\Mock\MockUnitOfWork.cs" />
+    <Compile Include="Api\SectionsControllerTests.cs" />
     <Compile Include="Api\WordsControllerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
