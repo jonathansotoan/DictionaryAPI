@@ -64,8 +64,7 @@ namespace Dictionary.Tests.Api.Mock
 
         public void Update(TEntity entityToUpdate)
         {
-            var oldEntity = this.GetById(entityToUpdate.ID);
-            oldEntity = entityToUpdate;
+            context[context.IndexOf(this.GetById(entityToUpdate.ID))] = entityToUpdate;
         }
     }
 }
