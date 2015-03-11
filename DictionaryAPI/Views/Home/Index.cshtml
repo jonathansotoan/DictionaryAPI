@@ -1,76 +1,85 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" ng-app="fanciestDictionary" ng-controller="GlobalController as globalCtrl">
-<head>
-    <title>The fanciest dictionary!</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @Styles.Render(
-        "~/bundles/bootstrap/css",
-        "~/bundles/listingWords"
-    )
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#project-name">Fanciest Dictionary</a>
+    <head>
+        <title>The fanciest dictionary!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @Styles.Render(
+            "~/bundles/bootstrap/css",
+            "~/bundles/listingWords"
+        )
+    </head>
+    <body>
+        <!-- #region nav menu -->
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#project-name">Fanciest Dictionary</a>
+                </div>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#search">Search word</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
             </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#search">Search word</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
+        </nav>
+        <!-- #endregion -->
 
-    <div ng-controller="WordsController as wordsCtrl">
-        <!-- Search -->
-        <div class="row">
-            <div class="form-group col-xs-offset-4 col-xs-8 col-sm-offset-6 col-sm-3 col-md-offset-6 col-md-3 col-lg-offset-6 col-lg-2">
-                <label class="sr-only" for="searchField">Type what you have to search</label>
-                <input type="text" class="form-control" id="searchField" ng-model="wordsCtrl.search" placeholder="Search here">
-            </div>
-        </div>
-        <!-- Section identifiers -->
-        <div class="row">
-            <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
-                <span ng-repeat="section in wordsCtrl.sections" class="label label-default section-panel-heading-{{section.id}}">{{section.name}}</span>
-            </div>
-        </div>
-        <!-- Words -->
-        <div class="row">
-            <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
-                <div ng-repeat="word in wordsCtrl.words | filter:wordsCtrl.search">
-                    <dct-word word="word"
-                              delete-word="wordsCtrl.deleteWord(word.id)"
-                              make-editable="wordsCtrl.makeEditable(id)"
-                              get-section="wordsCtrl.getSectionById(word.sectionID)"
-                    ></dct-word>
+        <div ng-controller="WordsController as wordsCtrl">
+            <!-- #region Search -->
+            <div class="row">
+                <div class="form-group col-xs-offset-4 col-xs-8 col-sm-offset-6 col-sm-3 col-md-offset-6 col-md-3 col-lg-offset-6 col-lg-2">
+                    <label class="sr-only" for="searchField">Type what you have to search</label>
+                    <input type="text" class="form-control" id="searchField" ng-model="wordsCtrl.search" placeholder="Search here">
                 </div>
             </div>
+            <!-- #endregion -->
+
+            <!-- #region Section identifiers -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
+                    <span ng-repeat="section in wordsCtrl.sections" class="label label-default section-panel-heading-{{section.id}}">{{section.name}}</span>
+                </div>
+            </div>
+            <!-- #endregion -->
+
+            <!-- #region Words -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-offset-3 col-sm-6 col-md-offset-3 col-md-6 col-lg-offset-4 col-lg-4">
+                    <div ng-repeat="word in wordsCtrl.words | filter:wordsCtrl.search">
+                        <dct-word word="word"
+                                  delete-word="wordsCtrl.deleteWord(word.id)"
+                                  make-editable="wordsCtrl.makeEditable(id)"
+                                  get-section="wordsCtrl.getSectionById(word.sectionID)"
+                        ></dct-word>
+                    </div>
+                </div>
+            </div>
+            <!-- #endregion -->
+
+            <!-- #region add word button -->
+            <div class="row">
+                <button type="button" class="btn btn-primary btn-lg center-block" ng-class="{disabled: !wordsCtrl.isAbleToAddWord}" ng-click="wordsCtrl.addWord()">Add word</button>
+            </div>
+            <!-- #endregion -->
         </div>
 
-        <div class="row">
-            <button type="button" class="btn btn-primary btn-lg center-block" ng-class="{disabled: !wordsCtrl.isAbleToAddWord}" ng-click="wordsCtrl.addWord()">Add word</button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    @Scripts.Render(
-        "~/bundles/jquery",
-        "~/bundles/bootstrap",
-        "~/bundles/angular",
-        "~/bundles/ckeditor",
-        "~/bundles/app"
-    )
-    <!--[if lt IE 9]>
-        @Scripts.Render("~/bundles/ie-compatibility-helpers")
-    <![endif]-->
-</body>
-
+        <!-- #region Scripts -->
+        @Scripts.Render(
+            "~/bundles/jquery",
+            "~/bundles/bootstrap",
+            "~/bundles/angular",
+            "~/bundles/ckeditor",
+            "~/bundles/app"
+        )
+        <!--[if lt IE 9]>
+            @Scripts.Render("~/bundles/ie-compatibility-helpers")
+        <![endif]-->
+        <!-- #endregion -->
+    </body>
 </html>

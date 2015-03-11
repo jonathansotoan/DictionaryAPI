@@ -23,6 +23,11 @@ namespace Dictionary.Tests.Api.Mock
             return newRepository;
         }
 
+        public override void Save()
+        {
+            
+        }
+
         public void SetRepositoryData<TEntity>(List<TEntity> data) where TEntity : BasicEntity
         {
             ((MockRepository<TEntity>)this.GetRepository<TEntity>()).context = data;

@@ -33,7 +33,7 @@ namespace Dictionary.DataAccess
             return newRepository;
         }
 
-        public void Save()
+        public virtual void Save()
         {
             context.SaveChanges();
         }
