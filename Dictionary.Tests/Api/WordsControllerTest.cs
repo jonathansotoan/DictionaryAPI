@@ -1,25 +1,63 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dictionary.UI.Controllers;
 using Dictionary.DataAccess;
-using Dictionary.Tests.Api.Mock;
 using Dictionary.Model;
 using System.Linq;
+using Moq;
 
 namespace Dictionary.Tests.Api
 {
     [TestClass]
     public class WordsControllerTest
     {
-        private MockUnitOfWork unitOfWork;
         private WordsController wordsController;
+
+        private MockRepository mockRepository;
+        private Mock<IUnitOfWork> mockUnitOfWork;
+        private Mock<IRepository<Word>> mockWordRepository;
 
         [TestInitialize]
         public void SetUp()
         {
-            unitOfWork = new MockUnitOfWork();
-            wordsController = new WordsController(unitOfWork);
+            // mocks initialization
+            mockRepository = new MockRepository(MockBehavior.Strict);
+            mockUnitOfWork = mockRepository.Create<IUnitOfWork>();
+            mockWordRepository = mockRepository.Create<IRepository<Word>>();
+            mockUnitOfWork.Setup(unitOfWork => unitOfWork.GetRepository<Word>()).Returns(mockWordRepository.Object);
+            
+            wordsController = new WordsController(mockUnitOfWork.Object);
 
-            unitOfWork.SetRepositoryData<Word>(DefaultObjects.Words);
+            for(int index = 0; index < DefaultObjects.Words.Count; ++index)
+            {
+                DefaultObjects.Words[index].ID = index + 1;
+            }
+
+            // mocks building
+            mockUnitOfWork.Setup(unitOfWork => unitOfWork.Save());//for being able to use Strict behaviour
+            mockWordRepository.Setup(wordRepo => wordRepo.Get(null, null, "")).Returns(DefaultObjects.Words);
+            mockWordRepository.Setup(wordRepo => wordRepo.GetById(It.IsAny<int>()))
+                .Returns<int>(id =>
+                {
+                    return DefaultObjects.Words.First(word => word.ID == id);
+                });
+            mockWordRepository.Setup(wordRepo => wordRepo.Insert(It.IsAny<Word>()))
+                .Returns<Word>(word =>
+                {
+                    DefaultObjects.Words.Add(word);
+                    return word;
+                });
+            //mockWordRepository.Setup(wordRepo => wordRepo.Update(It.IsAny<Word>()))
+            //    .Callback<Word>(word =>
+            //        {
+            //            DefaultObjects.Words.ForEach(w =>
+            //                {
+            //                    if (w.ID == word.ID)
+            //                    {
+            //                        DefaultObjects.Words[DefaultObjects.Words.IndexOf(w)] = word;
+            //                        return;
+            //                    }
+            //                });
+            //        });
         }
 
         [TestMethod]
@@ -29,17 +67,16 @@ namespace Dictionary.Tests.Api
         }
 
         [TestMethod]
-        public void GetById_ShouldReturnRightWord()
+        public void Get_WhenRightIdIsProvided_ShouldReturnRightWord()
         {
             for (int index = 0; index < DefaultObjects.Words.Count; ++index)
             {
-                DefaultObjects.Words[index].ID = index + 1;
-                Assert.AreEqual(DefaultObjects.Words[index], wordsController.Get(index + 1));
+                Assert.AreEqual(DefaultObjects.Words[index], wordsController.Get(index));
             }
         }
 
         [TestMethod]
-        public void GetById_ShouldReturnNullWhenTheWordDoesNotExist()
+        public void Get_WhenWrongIdIsProvided_ShouldReturnNull()
         {
             Assert.IsNull(wordsController.Get(192));
         }
@@ -54,8 +91,7 @@ namespace Dictionary.Tests.Api
                 Definition = "This is a word for testing",
                 SectionID = 1
             };
-
-            wordsController.Post(newWord);
+            
             Assert.AreEqual(newWord, wordsController.Get(20));
         }
 
@@ -171,8 +207,7 @@ namespace Dictionary.Tests.Api
         [TestCleanup]
         public void TearDown()
         {
-            unitOfWork = null;
-            wordsController = null;
+            //mockRepository.VerifyAll();
         }
     }
 }

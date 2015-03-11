@@ -9,16 +9,13 @@ namespace Dictionary.UI.Controllers
     [EnableCors(origins: "http://localhost:51994", headers: "*", methods: "*")]
     public class WordsController : ApiController
     {
-        private UnitOfWork<DictionaryContext> unitOfWork;
+        private IUnitOfWork unitOfWork;
 
-        public WordsController()
-        {
-            this.unitOfWork = new UnitOfWork<DictionaryContext>();
-        }
+        public WordsController() : this(new UnitOfWork<DictionaryContext>()) { }
 
-        public WordsController(UnitOfWork<DictionaryContext> uow)
+        public WordsController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = uow;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET api/Words/

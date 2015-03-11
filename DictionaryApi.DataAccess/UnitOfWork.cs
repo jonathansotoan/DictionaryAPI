@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Dictionary.DataAccess
 {
-    public class UnitOfWork<TContext> : IDisposable where TContext : DbContext, new()
+    public class UnitOfWork<TContext> : IUnitOfWork where TContext : DbContext, new()
     {
         protected DbContext context;
         protected Dictionary<Type, object> repositories;

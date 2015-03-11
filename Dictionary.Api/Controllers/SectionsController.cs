@@ -10,16 +10,13 @@ namespace Dictionary.Api.Controllers
     [EnableCors(origins: "http://localhost:51994", headers: "*", methods: "*")]
     public class SectionsController : ApiController
     {
-        private UnitOfWork<DictionaryContext> unitOfWork;
+        private IUnitOfWork unitOfWork;
 
-        public SectionsController()
-        {
-            this.unitOfWork = new UnitOfWork<DictionaryContext>();
-        }
+        public SectionsController() : this(new UnitOfWork<DictionaryContext>()) { }
 
-        public SectionsController(UnitOfWork<DictionaryContext> uow)
+        public SectionsController(IUnitOfWork unitOfWork)
         {
-            this.unitOfWork = uow;
+            this.unitOfWork = unitOfWork;
         }
 
         public IEnumerable<Section> Get()
