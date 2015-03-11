@@ -38,7 +38,7 @@ namespace Dictionary.Tests.Api
             mockWordRepository.Setup(wordRepo => wordRepo.GetById(It.IsAny<int>()))
                 .Returns<int>(id =>
                 {
-                    return DefaultObjects.Words.First(word => word.ID == id);
+                    return DefaultObjects.Words.FirstOrDefault(word => word.ID == id);
                 });
             mockWordRepository.Setup(wordRepo => wordRepo.Insert(It.IsAny<Word>()))
                 .Returns<Word>(word =>
@@ -46,18 +46,16 @@ namespace Dictionary.Tests.Api
                     DefaultObjects.Words.Add(word);
                     return word;
                 });
-            //mockWordRepository.Setup(wordRepo => wordRepo.Update(It.IsAny<Word>()))
-            //    .Callback<Word>(word =>
-            //        {
-            //            DefaultObjects.Words.ForEach(w =>
-            //                {
-            //                    if (w.ID == word.ID)
-            //                    {
-            //                        DefaultObjects.Words[DefaultObjects.Words.IndexOf(w)] = word;
-            //                        return;
-            //                    }
-            //                });
-            //        });
+            mockWordRepository.Setup(wordRepo => wordRepo.Update(It.IsAny<Word>()))
+                .Callback<Word>(word =>
+                    {
+                        DefaultObjects.Words[DefaultObjects.Words.IndexOf(mockWordRepository.Object.GetById(word.ID))] = word;
+                    });
+            mockWordRepository.Setup(wordRepo => wordRepo.Delete(It.IsAny<int>()))
+                .Callback<int>(id =>
+                {
+                    DefaultObjects.Words.Remove(mockWordRepository.Object.GetById(id));
+                });
         }
 
         [TestMethod]
@@ -71,7 +69,7 @@ namespace Dictionary.Tests.Api
         {
             for (int index = 0; index < DefaultObjects.Words.Count; ++index)
             {
-                Assert.AreEqual(DefaultObjects.Words[index], wordsController.Get(index));
+                Assert.AreEqual(DefaultObjects.Words[index], wordsController.Get(index + 1));
             }
         }
 
@@ -91,7 +89,9 @@ namespace Dictionary.Tests.Api
                 Definition = "This is a word for testing",
                 SectionID = 1
             };
-            
+
+            wordsController.Post(newWord);
+
             Assert.AreEqual(newWord, wordsController.Get(20));
         }
 
@@ -207,6 +207,8 @@ namespace Dictionary.Tests.Api
         [TestCleanup]
         public void TearDown()
         {
+            // it was commented out, for it would throw an exception for every method when all the mocked methods are not used
+            // (just for saving code)
             //mockRepository.VerifyAll();
         }
     }
