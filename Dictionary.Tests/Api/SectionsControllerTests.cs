@@ -19,36 +19,44 @@ namespace Dictionary.Tests.Api
         [TestInitialize]
         public void SetUp()
         {
+            // mocks initialization
             mockRepository = new MockRepository(MockBehavior.Strict);
             mockUnitOfWork = mockRepository.Create<IUnitOfWork>();
             mockSectionRepository = mockRepository.Create<IRepository<Section>>();
             sectionsController = new SectionsController(mockUnitOfWork.Object);
+
+            // mocks building
+            for (int index = 0; index < DefaultObjects.Sections.Count; ++index)
+            {
+                DefaultObjects.Sections[index].ID = index + 1;
+            }
+
+            mockSectionRepository.Setup(sectionRepo => sectionRepo.Get(null, null, "")).Returns(DefaultObjects.Sections);
+            mockUnitOfWork.Setup(unitOfWork => unitOfWork.GetRepository<Section>()).Returns(mockSectionRepository.Object);
         }
 
         [TestMethod]
         public void Get_ShouldReturnAllTheSections()
         {
-            mockSectionRepository.Setup(sectionRepo => sectionRepo.Get(null, null, "")).Returns(DefaultObjects.Sections);
-            mockUnitOfWork.Setup(unitOfWork => unitOfWork.GetRepository<Section>()).Returns(mockSectionRepository.Object);
 
             Assert.IsTrue(DefaultObjects.Sections.SequenceEqual(sectionsController.Get()));
         }
 
-        /*[TestMethod]
-        public void GetById_ShouldReturnRightSection()
+        [TestMethod]
+        public void Get_WhenRightIdIsProvided_ShouldReturnRightSection()
         {
             for (int index = 0; index < DefaultObjects.Sections.Count; ++index)
             {
-                DefaultObjects.Sections[index].ID = index + 1;
+                //DefaultObjects.Sections[index].ID = index + 1;
                 Assert.AreEqual(DefaultObjects.Sections[index], sectionsController.Get(index + 1));
             }
         }
 
         [TestMethod]
-        public void GetById_ShouldReturnNullWhenTheSectionDoesNotExist()
+        public void Get_WhenWrongIdIsProvided_ShouldReturnNull()
         {
             Assert.IsNull(sectionsController.Get(192));
-        }*/
+        }
 
         [TestCleanup]
         public void TearDown()

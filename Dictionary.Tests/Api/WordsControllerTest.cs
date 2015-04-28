@@ -23,16 +23,16 @@ namespace Dictionary.Tests.Api
             mockRepository = new MockRepository(MockBehavior.Strict);
             mockUnitOfWork = mockRepository.Create<IUnitOfWork>();
             mockWordRepository = mockRepository.Create<IRepository<Word>>();
-            mockUnitOfWork.Setup(unitOfWork => unitOfWork.GetRepository<Word>()).Returns(mockWordRepository.Object);
             
             wordsController = new WordsController(mockUnitOfWork.Object);
 
+            // mocks building
             for(int index = 0; index < DefaultObjects.Words.Count; ++index)
             {
                 DefaultObjects.Words[index].ID = index + 1;
             }
 
-            // mocks building
+            mockUnitOfWork.Setup(unitOfWork => unitOfWork.GetRepository<Word>()).Returns(mockWordRepository.Object);
             mockUnitOfWork.Setup(unitOfWork => unitOfWork.Save());//for being able to use Strict behaviour
             mockWordRepository.Setup(wordRepo => wordRepo.Get(null, null, "")).Returns(DefaultObjects.Words);
             mockWordRepository.Setup(wordRepo => wordRepo.GetById(It.IsAny<int>()))
